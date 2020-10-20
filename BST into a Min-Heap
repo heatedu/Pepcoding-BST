@@ -1,0 +1,48 @@
+//jese jese double Linked List bnaya h vese hi linkedlist bnao uske left m NULL krdo
+void TreetoLL(Node*root,Node*&head,Node*&tail)//head and tail are initially NULL
+{
+    if(root==NULL)
+        return;
+    TreetoLL(root->left,head,tail);
+    if(head==NULL)
+    {
+        root->left;
+        head=root;
+        tail=root;
+    }
+    else
+    {
+        root->left=NULL;
+        tail->right=root;
+        tail=root;
+    }
+   TreetoLL(root->right,head,tail);
+}
+//level order traversal kro queue ka use krte hue aur tree bnate jaoo
+void LLtoHeap(Node*&root,Node*head)
+{
+    if(head==NULL)
+    return;
+    root=head;
+    head=head->right;
+    root->right=NULL;
+    queue<Node*>q;
+    q.push(root);
+    while(head)
+    {
+        Node*front=q.front();
+        q.pop();
+        front->left=head;
+        q.push(head);
+        head=head->right;
+        front->left->right=NULL;
+        if(head)
+        {
+          front->right=head;
+          head=head->right;
+          front->right->right=NULL;
+          if(head)
+          q.push(head);
+        }
+    }
+}
