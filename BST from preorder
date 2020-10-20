@@ -1,0 +1,63 @@
+O(n*logn)Approach:
+
+
+TreeNode*helper(vector<int>&pre,int ps,int pe)
+{
+    if(ps>pe)return NULL;
+    TreeNode*root=new TreeNode(pre[ps]);
+    int temp;
+    for(int i=ps;i<=pe;i++)
+    {
+        if(pre[i]>pre[ps])
+        {
+            temp=i;
+            break;
+        }
+    }
+    int lpe,lps,rpe,rps;
+    lps=ps+1;
+    lpe=temp-1;
+    rps=temp;
+    rpe=pe;
+    root->left=helper(pre,lps,lpe);
+    root->right=helper(pre,rps,rpe);
+    return root;
+}
+class Solution {
+public:
+    TreeNode* bstFromPreorder(vector<int>& pre) {
+        return helper(pre,0,pre.size()-1);
+        }
+};
+
+O(n) Solution:
+
+TreeNode*helper(vector<int>& preorder,int &idx,int key,int size,int max,int min)
+{
+    if(idx>=size)
+        return NULL;
+    TreeNode*root=NULL;
+    if(key>min and key<max)
+    {
+        root=new TreeNode(key);
+        idx++;
+        if(idx<size)
+        {
+            root->left=helper(preorder,idx,preorder[idx],size,key,min);
+            //root->right=helper(preorder,idx,preorder[idx],size,max,key);//isse andar nhi rkh skte kyuki iske liye alag se check krna pdega for eg:[4,2]iss case k liye
+        }
+        if(idx<size)
+        {
+            root->right=helper(preorder,idx,preorder[idx],size,max,key);
+        }
+    }
+    return root;
+}
+class Solution {
+public:
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        int size=preorder.size();
+        int idx=0;
+        return helper(preorder,idx,preorder[0],size,INT_MAX,INT_MIN);
+    }
+};
