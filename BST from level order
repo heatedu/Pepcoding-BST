@@ -1,0 +1,26 @@
+Node* helper(Node*root,int val)
+{
+    if(root==NULL)
+    {
+      Node*ans=new Node(val);
+      return ans;
+    }
+    if(root->data>val)
+    {
+       root->left=helper(root->left,val); 
+    }
+    if(root->data<val)
+    {
+       root->right=helper(root->right,val); 
+    }
+    return root;
+}
+Node* constructBst(int arr[], int n)
+{
+    Node*root=new Node(arr[0]);
+	for(int i=1;i<n;i++)
+	helper(root,arr[i]);
+	return root;
+}
+//isme har element array ka bhj rhe h starting from idx=1 fr usko hum bhj rhe h helper function m ki jaa apni shi position dekhkr aa fr usko apni shi position p set krke next element
+//pr jaao
