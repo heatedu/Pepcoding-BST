@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool checkForSameBST(vector<int> a,vector<int> b){
+
+	int n = a.size();
+	int m = b.size(); 
+	if(n!=m){
+		return false;
+	}
+	if(n==0) return true;
+	if(a[0]!=b[0]) return false;
+
+	vector<int> aL,aR,bL,bR;
+
+	for(int i=1;i<n;i++){
+
+		if(a[i]<a[0])
+			aL.push_back(a[i]);
+		else
+			aR.push_back(a[i]);
+
+		if(b[i]<b[0])
+			bL.push_back(b[i]);
+		else
+			bR.push_back(b[i]);
+	}
+
+	return checkForSameBST(aL,bL) && checkForSameBST(aR,bR);
+
+}
+
+int main()
+{
+	vector<int> a = {8, 3, 6, 1, 4, 7, 10, 14, 13};  
+    vector<int> b = {8, 10, 14, 3, 6, 4, 1, 7, 13};  
+    cout<<checkForSameBST(a,b)<<endl;
+    return 0;
+}
