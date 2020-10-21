@@ -1,0 +1,40 @@
+//agar khud nh hua th phle morris preorder pdhle
+
+//k=3 lekr kro aa jaega smjh
+//20 8 22 4 12 null null null null 10 14 iss test case k liye
+int Ksmallest(Node*root,k)
+{
+   if(root==NULL)
+       return 0;
+    ll cnt=0,ans;
+    while(root)
+    {
+       if(root->left==NULL)//yh vh vala case agar k=1 h th
+       {
+          cnt++;
+          if(cnt==k)
+             ans=root->data;
+          root=root->right;
+        }
+        else
+        {
+            Node*curr=root->left;
+            while(curr->right!=NULL and curr->right!=root)
+                curr=curr->right;
+            if(curr->right==NULL)
+            {
+                curr->right=root;
+                root=root->left;
+            }
+            else
+            {
+                curr->right=NULL;
+                cnt++;
+                if(cnt==k)
+                  ans=root->data;
+                root=root->right;
+            }
+        }
+    }
+    return ans;
+}
