@@ -1,0 +1,48 @@
+void swap( int* a, int* b )
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+void helper(struct Node*root,struct Node*&first,struct Node*&middle,struct Node*&last,struct Node*&prev)
+{
+   if(root)
+   {
+       helper(root->left,first,middle,last,prev);
+       if(!prev)
+       prev=root;
+       else
+       {
+           if(prev and prev->data>root->data)
+           {
+               //ab do possibilty h ya th root aur prev m hi gdbd ho
+               //jese 5 20 15 maanlo th 15 20 ko dono hu vhi node h
+               if(!first)
+               {
+                   first=prev;
+                   middle=root;
+               }
+               else//ya fr jo frst m tha vh aur root m gdbd ho jese custom input m h
+               {
+                  last=root; 
+               }
+               
+           }
+            prev=root;
+       }
+       helper(root->right,first,middle,last,prev);
+   }
+}
+struct Node *correctBST( struct Node* root )
+{
+     struct Node *first, *middle, *last, *prev;
+    first = middle = last = prev = NULL;
+    helper(root,first,middle,last,prev);
+    // cout<<first->data<<" "<<middle->data<<endl;
+     if( first && last )
+        swap( &(first->data), &(last->data));
+    else if( first && middle ) // Adjacent nodes swapped
+        swap( &(first->data), &(middle->data));
+          //cout<<first->data<<" "<<middle->data<<endl;
+    return root;
+}
