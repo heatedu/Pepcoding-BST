@@ -16,7 +16,7 @@ void helper(struct Node*root,struct Node*&first,struct Node*&middle,struct Node*
            if(prev and prev->data>root->data)
            {
                //ab do possibilty h ya th root aur prev m hi gdbd ho
-               //jese 5 20 15 maanlo th 15 20 ko dono hu vhi node h
+               //jese 5 20 15(inorder) maanlo th 15 20 ko dono hu vhi node h
                if(!first)
                {
                    first=prev;
