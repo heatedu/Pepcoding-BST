@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        stack<TreeNode*>l;
+        stack<TreeNode*>r;
+        l.push(root);r.push(root);
+        TreeNode*curr=root->left;
+        while(curr!=NULL)
+        {
+            l.push(curr);
+            curr=curr->left;
+        }
+        curr=root->right;
+        while(curr!=NULL)
+        {
+            r.push(curr);
+            curr=curr->right;
+        }
+        while(l.size() and r.size() and l.top()!=r.top())
+        {
+            int sum=l.top()->val+r.top()->val;
+            if(sum==k)
+                return true;
+            else if(sum>k)
+            {
+                curr=r.top()->left;
+                r.pop();
+                while(curr)
+                {
+                    r.push(curr);
+                    curr=curr->right;
+                }
+            }
+            else
+            {
+                curr=l.top()->right;
+                l.pop();
+                while(curr!=NULL)
+                {
+                    l.push(curr);
+                    curr=curr->left;
+                }
+            }
+        }
+        return false;
+    }
+};
