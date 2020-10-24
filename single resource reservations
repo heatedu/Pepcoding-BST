@@ -1,0 +1,12 @@
+Node*insert(Node*root,int time,int k)//isme root==NULL h initially aur time vh h jiski request aai h th jese intitially example k acc time=2 hua kyuki ussi //ki request aai h
+{
+    if(root==NULL)
+        return newNode(time);
+    if((time-k<root->time)&&(root->time<time+k))//conflicting time
+        return root;
+    if(time<root->time)
+        root->left=insert(root->left,time,k);
+    if(time>root->time)
+        root->right=insert(root->right,time,k);
+    return root;
+}                                     
