@@ -1,0 +1,18 @@
+void helper(TreeNode*root,int &sum)
+{
+    if(root==NULL)
+        return;
+    helper(root->right,sum);
+    int w=root->val;
+    root->val+=sum;
+    sum+=w;
+    helper(root->left,sum);
+}
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        int sum=0;
+        helper(root,sum);
+        return root;
+    }
+};
