@@ -1,0 +1,19 @@
+struct Node* insert(struct Node* node, int key) 
+{ 
+   
+    if (node == NULL) return newNode(key); 
+    if (key < node->key) 
+    { 
+        Node *lchild = insert(node->left, key); 
+        node->left  = lchild; 
+        lchild->parent = node; 
+    } 
+    else if (key > node->key) 
+    { 
+        Node *rchild = insert(node->right, key); 
+        node->right  = rchild; 
+        rchild->parent = node; 
+    } 
+   return node; 
+} 
+  
