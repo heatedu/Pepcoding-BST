@@ -1,0 +1,24 @@
+void helper(Node*root,int k,int &min_diff,int &min_key)
+{
+    if(root==NULL)
+    return;
+     if (root->data == k) 
+    { 
+        min_diff=0;
+        min_key = k; 
+        return; 
+    } 
+    if(abs(root->data-k)<min_diff)
+    {
+        min_diff=abs(root->data-k);
+        min_key=root->data;
+    }
+    helper(root->left,k,min_diff,min_key);
+    helper(root->right,k,min_diff,min_key);
+}
+int minDiff(Node *root, int k)
+{
+   int min_diff=INT_MAX,min_key=-1;
+   helper(root,k,min_diff,min_key);
+   return min_diff;
+}
