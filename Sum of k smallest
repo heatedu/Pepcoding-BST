@@ -1,0 +1,52 @@
+struct Node *createNode(int data) 
+{ 
+    Node * new_Node = new Node; 
+    new_Node->left = NULL; 
+    new_Node->right = NULL; 
+    new_Node->data = data; 
+    new_Node->lCount = 0 ; 
+    new_Node->Sum = 0; 
+    return new_Node; 
+} 
+Node*insert(Node*root,int key)
+{
+    if(root==NULL)
+        return createNode(key);
+    if(key<root->data)
+    {
+        root->lcnt++;
+        root->sum+=key;
+        root->left=insert(root->left,key);
+    }
+   else if (root->data < key ) 
+    {
+        root->right=insert(root->right,key);
+    }
+    return root;
+}
+void helper(Node*root,int k,int &sum)
+{
+    if(root==NULL)
+        return;
+    if(root->lcnt+1==k)
+    {
+        sum=root->data+root->sum;
+        return;
+    }
+    else if(root->lcnt>k)
+    {
+      helper(root->left,k,sum);   
+    }
+    else if(root->lcnt<k)
+    {
+        sum=root->sum+root->data;
+        k-=root->lcnt+1;
+        helper(root->right,k,sum);
+    }
+}
+int kthSmallest(Node*root,int k)
+{
+    int sum=0;
+    helper(root,k,sum);
+    return sum;
+}
