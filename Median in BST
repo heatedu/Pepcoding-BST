@@ -1,0 +1,80 @@
+int count(Node*root)
+{
+    int cnt=0;
+    while(root)
+    {
+        if(root->left==NULL)
+        {
+            cnt++;
+            root=root->right;
+        }
+        else
+        {
+            Node*curr=root->left;
+            while(curr->right!=NULL and curr->right!=root)
+                curr=curr->right;
+            if(curr->right==NULL)
+            {
+                curr->right=root;
+                root=root->left;
+            }
+            else if(curr->right==root)
+            {
+                cnt++;
+                curr->right=NULL;
+                root=root->right;
+            }
+        }
+    }
+    return cnt;
+}
+int findMedian(Node*root)
+{
+    if(root==NULL)
+        return 0;
+    int currcnt=0;
+     int cnt = count(root);
+    Node*curr,prev=root;
+    while(root)
+    {
+        if(root->left==NULL)
+        {
+            currcnt++;
+            if(cnt&1 and currcnt==(cnt+1)/2)
+            {
+                return prev->data;
+            }
+            else if(!cnt&1 and currcnt=((cnt)/2+(cnt+1)/2)/2)
+            {
+                return (prev->data+root->data)/2;
+            }
+            prev=root;
+            root=root->right;
+        }
+        else
+        {
+            Node*curr=root->left;
+            while(curr->right!=NULL and curr->right!=root)
+            {
+                curr=curr->right;
+            }
+            if(curr->right==NULL)
+            {
+                curr->right=root;
+                root=root->left;
+            }
+            else if(curr->right==root)
+            {
+                currcnt++;
+                curr->right=NULL;
+                prev=curr;
+                if(cnt&1 and currcnt==(cnt+1)/2)
+                return root->data;
+                else if(!cnt&1 and currcnt=((cnt)/2+(cnt+1)/2)/2)
+                return (prev->data+root->data)/2;
+                prev=root;
+                root=root->right;
+            }
+        }
+    }
+}
