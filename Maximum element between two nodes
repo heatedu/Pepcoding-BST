@@ -1,0 +1,51 @@
+//The idea is to find Lowest Common Ancestor of node ‘a’ and node ‘b’. Then search maximum node between LCA and ‘a’, also find maximum node between LCA and ‘b’. Answer will be 
+//maximum node of two.
+
+int maxelpath(Node *q, int x) 
+{ 
+    Node *p = q; 
+  
+    int mx = INT_MIN; 
+  
+       while (p -> data != x) 
+    { 
+        if (p -> data > x) 
+        { 
+            mx = max(mx, p -> data); 
+            p = p -> left; 
+        } 
+        else
+        { 
+            mx = max(mx, p -> data); 
+            p = p -> right; 
+        } 
+    } 
+  
+    return max(mx, x); 
+} 
+  
+// Return maximum element in the path between 
+// two given Node of BST. 
+int maximumElement(struct Node *root, int x, int y) 
+{ 
+    Node *p = root; 
+  
+    // Finding the LCA of Node x and Node y 
+    while ((x < p -> data && y < p -> data) || 
+        (x > p -> data && y > p -> data)) 
+    { 
+        // Checking if both the Node lie on the 
+        // left side of the parent p. 
+        if (x < p -> data && y < p -> data) 
+            p = p -> left; 
+  
+        // Checking if both the Node lie on the 
+        // right side of the parent p. 
+        else if (x > p -> data && y > p -> data) 
+            p = p -> right; 
+    } 
+  
+    // Return the maximum of maximum elements occur 
+    // in path from ancestor to both Node. 
+    return max(maxelpath(p, x), maxelpath(p, y)); 
+}
