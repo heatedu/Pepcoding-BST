@@ -1,0 +1,38 @@
+int bsearch(int inorder[],int x,int low,int high)
+{
+    int mid=(low+high)/2;
+    if(inorder[mid]==x)
+        return mid;
+    if(inorder[mid]<x)
+        return bsearch(inorder,x,mid+1,high);
+    if(inorder[mid]>x)
+        return bsearch(inorder,x,low,high-1);
+}
+void helper(int preorder[],int inorder[],int l,int h,int &i,int n)
+{
+    if(i>=n)
+        return;
+    if(l<0||l>r||r>=n)
+        return;
+    if(l==r)//mtlb na th koi left m h na koi right m h th yhi lesf h
+    {
+        cout<<preorder[i++]<<" ";
+        return;
+    }
+    int loc=bsearch(inorder,preorder[i],l,h);
+    //for left subtree
+    helper(preorder,inorder,l,loc-1,++i,n);
+    //for right suvtree
+    helper(preorder,inorder,loc+1,h,++i,n);
+}
+void leafNodes(int preorder[], int n)
+{
+    int inorder[n];
+    for(int i=0;i<n;i++)
+        inorder[i]=preorder[i];
+    sort(inorder,inorder+n);
+    int i=0;
+    helper(preorder,inorder,0,n-1,i,n);
+}
+
+//M2
